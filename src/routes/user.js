@@ -28,6 +28,11 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
   }
 });
 
+
+
+
+//connections 
+
 userRouter.get("/user/connections", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
@@ -57,5 +62,12 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
     res.status(400).send({ message: err.message });
   }
 });
+
+
+
+
+
+//feed api....
+
 
 module.exports = userRouter;
