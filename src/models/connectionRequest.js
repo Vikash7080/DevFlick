@@ -23,6 +23,10 @@ const connectionRequestSchema = new mongoose.Schema (
 {timestamps:true}
 ); 
 
+// compound indexes..to manage faster query
+connectionRequestSchema.index({fromUserId:1,toUserId:1});
+
+
 
 
 //pre hook kund of a middleware that is used to check whether that touser id and fromuser id is same if it same then give res..

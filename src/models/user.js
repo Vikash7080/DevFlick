@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        
         lowercase: true,
         trim: true,
         validate(value) {
@@ -70,7 +71,10 @@ message:`{VALUE} is not a valid gender type`,
     timestamps: true,
 });
 
-// ✅ Generate JWT token
+// User.find({firstName:" akshay",lastName:"Saini"});
+// userSchema.index({firstName:1,lastName:1});
+
+
 userSchema.methods.getJWT = async function () {
     const user = this;
     const token = jwt.sign({ _id: user._id }, "Dev1234@123", {
