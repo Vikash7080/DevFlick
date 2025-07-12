@@ -77,7 +77,7 @@ message:`{VALUE} is not a valid gender type`,
 
 userSchema.methods.getJWT = async function () {
     const user = this;
-    const token = jwt.sign({ _id: user._id }, "Dev1234@123", {
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "7d"
     });
     return token;
