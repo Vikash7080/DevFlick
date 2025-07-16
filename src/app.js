@@ -1,7 +1,5 @@
-
-require("dotenv").config(); 
-
 const express = require("express");
+require("dotenv").config(); 
 const connectDB = require("./config/database");
 const app = express();
 
@@ -12,12 +10,14 @@ const cors = require("cors");
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true,
 
-})
-);
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+  credentials: true,
+  methods: ["GET", "POST", "PATCH", "DELETE"], // explicitly allow PATCH etc.
+  allowedHeaders: ["Content-Type", "Authorization"], // optional: customize if needed
+}));
+
 
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
