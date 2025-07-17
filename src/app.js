@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+  origin: process.env.CORS_ORIGIN ,
   credentials: true,
   methods: ["GET", "POST", "PATCH", "DELETE"], // explicitly allow PATCH etc.
   allowedHeaders: ["Content-Type", "Authorization"], // optional: customize if needed
@@ -37,7 +37,7 @@ connectDB()
     .then(() => {
         console.log("Database connection established");
         app.listen(PORT, () => {
-            console.log("Server is listening on port 7777...");
+            console.log(`Server is listening on ${PORT}..`);
         });
     })
     .catch((err) => {
