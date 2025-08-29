@@ -17,7 +17,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        
         lowercase: true,
         trim: true,
         validate(value) {
@@ -42,18 +41,21 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         enum: {
-values: ["male","female","other"],
-message:`{VALUE} is not a valid gender type`,
+            values: ["male", "female", "other"],
+            message: `{VALUE} is not a valid gender type`,
         },
-        // validate(value) {
-        //     if (!["male", "female", "others"].includes(value)) {
-        //         throw new Error("Gender data is not valid");
-        //     }
-        // },
+       
     },
+     isPremium:{
+            type:Boolean,
+            default:false,
+        },
+        membershipType:{
+            type:String,
+        },
     photoUrl: {
         type: String,
-        default: "https://i.imgur.com/MT9Q4Vj.png",
+        default: "https://satyam-kumar-yadav.github.io/assets/img/profile.png",
         validate(value) {
             if (value && !validator.isURL(value, { protocols: ['http', 'https'], require_protocol: true })) {
                 throw new Error("Invalid photo URL: " + value);
@@ -67,13 +69,17 @@ message:`{VALUE} is not a valid gender type`,
     skills: {
         type: [String],
     },
+    githubUrl: {   // ✅ new field
+        type: String,
+        validate(value) {
+            if (value && !validator.isURL(value, { protocols: ['http', 'https'], require_protocol: true })) {
+                throw new Error("Invalid GitHub URL: " + value);
+            }
+        }
+    }
 }, {
     timestamps: true,
 });
-
-// User.find({firstName:" akshay",lastName:"Saini"});
-// userSchema.index({firstName:1,lastName:1});
-
 
 userSchema.methods.getJWT = async function () {
     const user = this;
@@ -83,7 +89,6 @@ userSchema.methods.getJWT = async function () {
     return token;
 };
 
-// ✅ Compare password
 userSchema.methods.validatePassword = async function (passwordInputByUser) {
     const user = this;
     const isPasswordValid = await bcrypt.compare(passwordInputByUser, user.password);

@@ -24,6 +24,7 @@
         "age",
         "about",
         "skills",
+        "githubUrl"
     ];
    const isEditAllowed =  Object.keys(req.body).every((field) =>
         allowedEditFields.includes(field)
