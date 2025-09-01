@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 // ---------- CORS ----------
 const allowedOrigins = [
   "http://localhost:5173",                 // Dev frontend
-  "https://dev-flick-web.vercel.app",  // ✅ apna exact Vercel frontend URL yahan daalo
+  "https://dev-flick-web.vercel.app",  
 ];
 
 app.use(cors({

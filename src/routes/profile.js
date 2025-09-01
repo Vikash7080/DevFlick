@@ -4,13 +4,20 @@ const { validateEditProfileData } = require("../utils/validation");
 const { userAuth } = require("../middlewares/auth");
 
 // View profile
-profileRouter.get("/profile/view", userAuth, async (req, res) => {
+profileRouter.get("/profile/view", async (req, res) => {
+  try {
+    // Try to get user from token
+    let user = null;
     try {
-        const user = req.user;
-        res.send(user);
-    } catch (err) {
-        res.status(401).send("Invalid or missing token: " + err.message);
+      await userAuth(req, res, () => {});
+      user = req.user; // If authenticated
+    } catch (_) {
+      user = null; // If not authenticated, return null
     }
+    res.json(user); // user object if logged in, else null
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 // Edit profile
